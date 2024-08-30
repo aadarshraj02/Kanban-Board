@@ -1,3 +1,4 @@
+import AddTask from "./AddTask";
 import TaskCard from "./TaskCard";
 
 const allTasks = {
@@ -22,6 +23,7 @@ const KanbanBoard = () => {
         <h2 className="text-xl font-semibold text-red-800 bg-red-100 mb-2 p-4 rounded-lg">
           To Do
         </h2>
+        <AddTask />
         {allTasks.todo.map((task) => (
           <TaskCard
             key={task.id}
