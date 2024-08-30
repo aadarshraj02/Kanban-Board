@@ -18,12 +18,12 @@ const TaskCard = ({ title, description, id, onDelete, column }) => {
   return (
     <div
       ref={drag}
-      className={`bg-white p-4 rounded-lg shadow-md mb-4 w-full h-32 flex flex-col gap-[6px] relative ${
+      className={`bg-zinc-900 p-4 rounded-lg shadow-md mb-4 w-full h-36 flex flex-col gap-[6px] relative cursor-grab ${
         isDragging ? "opacity-50" : "opacity-100"
       }`}
     >
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="text-sm text-gray-600 mb-3 overflow-hidden">
+      <h3 className="text-lg font-semibold text-white">{title.toUpperCase()}</h3>
+      <p className="text-sm text-gray-400 mb-3 overflow-hidden">
         {shortenedDescription}
       </p>
       <div className="flex justify-between items-center absolute bottom-5 w-full px-4">
