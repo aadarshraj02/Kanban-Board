@@ -1,7 +1,18 @@
 import { useState } from "react";
 
-const AddTask = () => {
+const AddTask = ({ addTask }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleAddTask = () => {
+    if (title.trim() && description.trim()) {
+      addTask(title, description);
+      setTitle("");
+      setDescription("");
+      setIsOpen(false);
+    }
+  };
 
   return (
     <div className="fixed bottom-4 right-4">
@@ -14,16 +25,20 @@ const AddTask = () => {
 
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-zinc-600 p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-xl font-semibold mb-4 text-zinc-300">Add New Task</h2>
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-xl font-semibold mb-4">Add New Task</h2>
             <input
               type="text"
               placeholder="Task Title"
-              className="w-full p-2 mb-4 border border-gray-300 rounded outline-none"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full p-2 mb-4 border border-gray-300 rounded"
             />
             <textarea
               placeholder="Task Description"
-              className="w-full p-2 mb-4 border border-gray-300 outline-none rounded h-24"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full p-2 mb-4 border border-gray-300 rounded h-24"
             />
             <div className="flex justify-end gap-2">
               <button
@@ -32,7 +47,10 @@ const AddTask = () => {
               >
                 Cancel
               </button>
-              <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                onClick={handleAddTask}
+              >
                 Add Task
               </button>
             </div>
