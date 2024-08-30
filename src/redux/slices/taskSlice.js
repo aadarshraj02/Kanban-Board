@@ -15,17 +15,17 @@ const tasksSlice = createSlice({
       const { column, task } = action.payload;
       state[column].push(task);
     },
-    moveTask: (state, action) => {
-      const { taskId, from, to } = action.payload;
-      const taskIndex = state[from].findIndex((task) => task.id === taskId);
-      if (taskIndex > -1) {
-        const [task] = state[from].splice(taskIndex, 1);
-        state[to].push(task);
-      }
-    },
     deleteTask: (state, action) => {
       const { column, id } = action.payload;
       state[column] = state[column].filter((task) => task.id != id);
+    },
+    editTask: (state, action) => {
+      const { column, id, title, description } = action.payload;
+      const task = state[column].find((task) => task.id === id);
+      if (task) {
+        task.title = title;
+        task.description = description;
+      }
     },
   },
 });
