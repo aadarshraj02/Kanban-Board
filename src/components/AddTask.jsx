@@ -25,8 +25,8 @@ const AddTask = ({ addTask }) => {
 
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-xl font-semibold mb-4">Add New Task</h2>
+          <div className="bg-zinc-700 p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-xl text-white font-semibold mb-4">Add New Task</h2>
             <input
               type="text"
               placeholder="Task Title"
