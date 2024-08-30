@@ -47,9 +47,21 @@ const tasksSlice = createSlice({
     clearFilter(state) {
       state.filteredTasks = null;
     },
+    moveTask(state, action) {
+      const { id, fromColumn, toColumn } = action.payload;
+      const taskIndex = state[fromColumn].findIndex((task) => task.id === id);
+      const [movedTask] = state[fromColumn].splice(taskIndex, 1);
+      state[toColumn].push(movedTask);
+    },
   },
 });
 
-export const { addTask, deleteTask, editTask, searchTasks, clearFilter } =
-  tasksSlice.actions;
+export const {
+  addTask,
+  deleteTask,
+  editTask,
+  searchTasks,
+  clearFilter,
+  moveTask,
+} = tasksSlice.actions;
 export default tasksSlice.reducer;

@@ -1,13 +1,27 @@
 import { MdDelete, MdOutlineEditNote } from "react-icons/md";
+import { useDrag } from "react-dnd";
 
-const TaskCard = ({ title, description, id, onDelete }) => {
+const TaskCard = ({ title, description, id, onDelete, column }) => {
   const shortenedDescription =
     description.length > 100
       ? `${description.substring(0, 100)}...`
       : description;
 
+  const [{ isDragging }, drag] = useDrag({
+    type: "TASK",
+    item: { id, column },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md mb-4 w-full h-36 flex flex-col gap-[6px] relative">
+    <div
+      ref={drag}
+      className={`bg-white p-4 rounded-lg shadow-md mb-4 w-full h-32 flex flex-col gap-[6px] relative ${
+        isDragging ? "opacity-50" : "opacity-100"
+      }`}
+    >
       <h3 className="text-lg font-semibold">{title}</h3>
       <p className="text-sm text-gray-600 mb-3 overflow-hidden">
         {shortenedDescription}
