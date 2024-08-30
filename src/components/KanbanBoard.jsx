@@ -1,11 +1,17 @@
 import TaskCard from "./TaskCard";
 import AddTask from "./AddTask";
 import { useSelector, useDispatch } from "react-redux";
-import { addTask, deleteTask } from "../redux/slices/taskSlice";
+import {
+  addTask,
+  deleteTask,
+  searchTasks,
+  clearFilter,
+} from "../redux/slices/taskSlice";
 import SearchTask from "./SearchTask";
 
 const KanbanBoard = () => {
   const tasks = useSelector((state) => state.tasks);
+  const filteredTasks = useSelector((state) => state.tasks.filteredTasks);
   const dispatch = useDispatch();
 
   const handleAddTask = (title, description) => {
@@ -21,61 +27,53 @@ const KanbanBoard = () => {
     dispatch(deleteTask({ column, id }));
   };
 
+  const handleSearch = (searchText) => {
+    if (searchText) {
+      dispatch(searchTasks(searchText));
+    } else {
+      dispatch(clearFilter());
+    }
+  };
+
+  const renderTasks = (column) => {
+    const tasksToRender = filteredTasks?.[column] || tasks[column];
+    return tasksToRender.map((task) => (
+      <TaskCard
+        key={task.id}
+        title={task.title}
+        description={task.description}
+        onDelete={() => handleDeleteTask(column, task.id)}
+      />
+    ));
+  };
+
   return (
     <div className="p-4">
-      <SearchTask />
+      <SearchTask onSearch={handleSearch} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 text-center h-[90vh]">
         <div className="border-r-2 border-zinc-500 pr-3">
           <h2 className="text-xl font-semibold text-red-800 bg-red-100 mb-2 p-4 rounded-lg">
             To Do
           </h2>
-          {tasks.todo.map((task) => (
-            <TaskCard
-              key={task.id}
-              title={task.title}
-              description={task.description}
-              onDelete={() => handleDeleteTask("todo", task.id)}
-            />
-          ))}
+          {renderTasks("todo")}
         </div>
         <div className="border-r-2 border-zinc-500 pr-3">
           <h2 className="text-xl font-semibold text-blue-800 mb-2 bg-blue-100 p-4 rounded-lg">
             In Progress
           </h2>
-          {tasks.inProgress.map((task) => (
-            <TaskCard
-              key={task.id}
-              title={task.title}
-              description={task.description}
-              onDelete={() => handleDeleteTask("inProgress", task.id)}
-            />
-          ))}
+          {renderTasks("inProgress")}
         </div>
         <div className="border-r-2 border-zinc-500 pr-3">
           <h2 className="text-xl font-semibold text-yellow-800 mb-2 bg-yellow-100 p-4 rounded-lg">
             Peer Review
           </h2>
-          {tasks.peerReview.map((task) => (
-            <TaskCard
-              key={task.id}
-              title={task.title}
-              description={task.description}
-              onDelete={() => handleDeleteTask("peerReview", task.id)}
-            />
-          ))}
+          {renderTasks("peerReview")}
         </div>
         <div>
           <h2 className="text-xl font-semibold text-green-800 mb-2 bg-green-100 p-4 rounded-lg">
             Done
           </h2>
-          {tasks.done.map((task) => (
-            <TaskCard
-              key={task.id}
-              title={task.title}
-              description={task.description}
-              onDelete={() => handleDeleteTask("done", task.id)}
-            />
-          ))}
+          {renderTasks("done")}
         </div>
         <AddTask addTask={handleAddTask} />
       </div>
