@@ -24,7 +24,7 @@ const KanbanBoard = () => {
   return (
     <div className="p-4">
       <SearchTask />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 text-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 text-center h-[90vh]">
         <div className="border-r-2 border-zinc-500 pr-3">
           <h2 className="text-xl font-semibold text-red-800 bg-red-100 mb-2 p-4 rounded-lg">
             To Do
