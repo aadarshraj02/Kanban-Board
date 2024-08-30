@@ -1,7 +1,7 @@
 import TaskCard from "./TaskCard";
 import AddTask from "./AddTask";
 import { useSelector, useDispatch } from "react-redux";
-import { addTask } from "../redux/slices/taskSlice";
+import { addTask, deleteTask } from "../redux/slices/taskSlice";
 
 const KanbanBoard = () => {
   const tasks = useSelector((state) => state.tasks);
@@ -13,7 +13,11 @@ const KanbanBoard = () => {
       title,
       description,
     };
-    dispatch(addTask(newTask));
+    dispatch(addTask({ column: "todo", task: newTask }));
+  };
+
+  const handleDeleteTask = (column, id) => {
+    dispatch(deleteTask({ column, id }));
   };
 
   return (
@@ -27,6 +31,7 @@ const KanbanBoard = () => {
             key={task.id}
             title={task.title}
             description={task.description}
+            onDelete={() => handleDeleteTask("todo", task.id)}
           />
         ))}
       </div>
@@ -39,6 +44,7 @@ const KanbanBoard = () => {
             key={task.id}
             title={task.title}
             description={task.description}
+            onDelete={() => handleDeleteTask("inProgress", task.id)}
           />
         ))}
       </div>
@@ -51,6 +57,7 @@ const KanbanBoard = () => {
             key={task.id}
             title={task.title}
             description={task.description}
+            onDelete={() => handleDeleteTask("peerReview", task.id)}
           />
         ))}
       </div>
@@ -63,6 +70,7 @@ const KanbanBoard = () => {
             key={task.id}
             title={task.title}
             description={task.description}
+            onDelete={() => handleDeleteTask("done", task.id)}
           />
         ))}
       </div>

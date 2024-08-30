@@ -1,6 +1,6 @@
 import { MdDelete, MdOutlineEditNote } from "react-icons/md";
 
-const TaskCard = ({ title, description }) => {
+const TaskCard = ({ title, description, id, onDelete }) => {
   const shortenedDescription =
     description.length > 100
       ? `${description.substring(0, 100)}...`
@@ -14,7 +14,10 @@ const TaskCard = ({ title, description }) => {
       </p>
       <div className="flex justify-between items-center absolute bottom-5 w-full px-4">
         <MdOutlineEditNote className="text-2xl absolute left-2 cursor-pointer text-blue-500 hover:scale-125 transition-all duration-300 ease-linear" />
-        <MdDelete className="text-2xl absolute right-8 text-red-500 hover:scale-125 transition-all duration-300 ease-linear cursor-pointer" />
+        <MdDelete
+          onClick={() => onDelete(id)}
+          className="text-2xl absolute right-8 text-red-500 hover:scale-125 transition-all duration-300 ease-linear cursor-pointer"
+        />
       </div>
     </div>
   );

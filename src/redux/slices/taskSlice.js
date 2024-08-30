@@ -11,8 +11,9 @@ const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    addTask: (state, action) => {
-      state.todo.push(action.payload);
+    addTask(state, action) {
+      const { column, task } = action.payload;
+      state[column].push(task);
     },
     moveTask: (state, action) => {
       const { taskId, from, to } = action.payload;
