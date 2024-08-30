@@ -32,13 +32,13 @@ const AddTask = ({ addTask }) => {
               placeholder="Task Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full p-2 mb-4 border border-gray-300 rounded"
+              className="w-full p-2 mb-4 border border-gray-300 rounded outline-none"
             />
             <textarea
               placeholder="Task Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 mb-4 border border-gray-300 rounded h-24"
+              className="w-full p-2 mb-4 border border-gray-300 rounded h-24 outline-none"
             />
             <div className="flex justify-end gap-2">
               <button
