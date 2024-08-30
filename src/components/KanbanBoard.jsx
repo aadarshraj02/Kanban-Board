@@ -1,33 +1,19 @@
-import { useState } from "react";
 import TaskCard from "./TaskCard";
 import AddTask from "./AddTask";
+import { useSelector, useDispatch } from "react-redux";
+import { addTask } from "../redux/slices/taskSlice";
 
 const KanbanBoard = () => {
-  const [tasks, setTasks] = useState({
-    todo: [
-      {
-        id: 1,
-        title: "Task 1",
-        description:
-          "Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc.",
-      },
-      { id: 2, title: "Task 2", description: "Description" },
-    ],
-    inProgress: [{ id: 3, title: "Task 3", description: "Description" }],
-    peerReview: [{ id: 4, title: "Task 4", description: "Description" }],
-    done: [{ id: 5, title: "Task 5", description: "Description" }],
-  });
+  const tasks = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
 
-  const addTask = (title, description) => {
+  const handleAddTask = (title, description) => {
     const newTask = {
       id: tasks.todo.length + 1,
       title,
       description,
     };
-    setTasks((prevTasks) => ({
-      ...prevTasks,
-      todo: [...prevTasks.todo, newTask],
-    }));
+    dispatch(addTask(newTask));
   };
 
   return (
@@ -80,7 +66,7 @@ const KanbanBoard = () => {
           />
         ))}
       </div>
-      <AddTask addTask={addTask} />
+      <AddTask addTask={handleAddTask} />
     </div>
   );
 };
