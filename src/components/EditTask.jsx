@@ -21,7 +21,7 @@ const EditTask = ({ task, column, onCancel }) => {
 
   return (
     <div>
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
         <div className="bg-zinc-700 p-6 rounded-lg shadow-lg w-96">
           <h2 className="text-xl text-white font-semibold mb-4">Edit Task</h2>
           <input
