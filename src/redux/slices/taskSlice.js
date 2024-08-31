@@ -9,15 +9,22 @@ const initialState = {
 };
 const tasksSlice = createSlice({
   name: "tasks",
-  initialState,
+  initialState: {
+    todo: JSON.parse(localStorage.getItem("tasks"))?.todo || [],
+    inProgress: JSON.parse(localStorage.getItem("tasks"))?.inProgress || [],
+    peerReview: JSON.parse(localStorage.getItem("tasks"))?.peerReview || [],
+    done: JSON.parse(localStorage.getItem("tasks"))?.done || [],
+  },
   reducers: {
     addTask(state, action) {
       const { column, task } = action.payload;
       state[column].push(task);
+      localStorage.setItem("tasks", JSON.stringify(state));
     },
     deleteTask(state, action) {
       const { column, id } = action.payload;
       state[column] = state[column].filter((task) => task.id !== id);
+      localStorage.setItem("tasks", JSON.stringify(state));
     },
     editTask(state, action) {
       const { column, id, title, description } = action.payload;
@@ -25,6 +32,7 @@ const tasksSlice = createSlice({
       if (task) {
         task.title = title;
         task.description = description;
+        localStorage.setItem("tasks", JSON.stringify(state));
       }
     },
     searchTasks(state, action) {
@@ -52,6 +60,7 @@ const tasksSlice = createSlice({
       const taskIndex = state[fromColumn].findIndex((task) => task.id === id);
       const [movedTask] = state[fromColumn].splice(taskIndex, 1);
       state[toColumn].push(movedTask);
+      localStorage.setItem("tasks", JSON.stringify(state));
     },
   },
 });
