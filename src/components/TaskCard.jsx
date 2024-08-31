@@ -1,5 +1,7 @@
 import { MdDelete, MdOutlineEditNote } from "react-icons/md";
 import { useDrag } from "react-dnd";
+import { useState } from "react";
+import EditTask from "./EditTask";
 
 const TaskCard = ({ title, description, id, onDelete, column }) => {
   const shortenedDescription =
@@ -15,6 +17,16 @@ const TaskCard = ({ title, description, id, onDelete, column }) => {
     }),
   });
 
+  const [isEdit, setIsEdit] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEdit(true);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEdit(false);
+  };
+
   return (
     <div
       ref={drag}
@@ -22,17 +34,29 @@ const TaskCard = ({ title, description, id, onDelete, column }) => {
         isDragging ? "opacity-50" : "opacity-100"
       }`}
     >
-      <h3 className="text-lg font-semibold text-white">{title.toUpperCase()}</h3>
+      <h3 className="text-lg font-semibold text-white">
+        {title.toUpperCase()}
+      </h3>
       <p className="text-sm text-gray-400 mb-3 overflow-hidden">
         {shortenedDescription}
       </p>
       <div className="flex justify-between items-center absolute bottom-5 w-full px-4">
-        <MdOutlineEditNote className="text-2xl absolute left-2 cursor-pointer text-blue-500 hover:scale-125 transition-all duration-300 ease-linear" />
+        <MdOutlineEditNote
+          onClick={handleEditClick}
+          className="text-2xl absolute left-2 cursor-pointer text-blue-500 hover:scale-125 transition-all duration-300 ease-linear"
+        />
         <MdDelete
           onClick={() => onDelete(id)}
           className="text-2xl absolute right-8 text-red-500 hover:scale-125 transition-all duration-300 ease-linear cursor-pointer"
         />
       </div>
+      {isEdit && (
+        <EditTask
+          task={{ id, title, description }}
+          column={column}
+          onCancel={handleCancelEdit}
+        />
+      )}
     </div>
   );
 };
