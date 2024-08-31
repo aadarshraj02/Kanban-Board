@@ -1,12 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  todo: [],
-  inProgress: [],
-  peerReview: [],
-  done: [],
-  filteredTasks: null,
-};
 const tasksSlice = createSlice({
   name: "tasks",
   initialState: {
